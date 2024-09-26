@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +10,9 @@ public class ProfileScript : MonoBehaviour
     public bool fullscreen = false;
     float orig_y, orig_x, orig_h, orig_w;
     float width, height;
-    // Start is called before the first frame update
     void Start()
     {
+        // Get original transforms of the profile
         rectTransform = GetComponent<RectTransform>();
         GetComponent<Image>().sprite = profile.avatar;
         orig_y = rectTransform.anchoredPosition.y;
@@ -22,8 +20,7 @@ public class ProfileScript : MonoBehaviour
         orig_h = rectTransform.sizeDelta.y;
         orig_w = rectTransform.sizeDelta.x;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         float x, y;

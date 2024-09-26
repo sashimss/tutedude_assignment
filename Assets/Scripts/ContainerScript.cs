@@ -16,16 +16,19 @@ public class ContainerScript : MonoBehaviour
 
     float profile_width;
     
-    // Start is called before the first frame update
     void Start()
     {
+        // Get width of profile and calculate ypos, also add player to the profile display container
         profile_width = profile_prefab.GetComponent<RectTransform>().sizeDelta.x+x_padding;
         y_pos = Screen.height/2-profile_prefab.GetComponent<RectTransform>().sizeDelta.y/2;
         AddProfile(player);
     }
 
     void Update(){
+        // Get number of profiles to be displayed in this page
         int profiles_in_this_page = 6*page<=user_profiles.Count-6? 6 : user_profiles.Count%6;
+        
+        // Show the buttons to turn the page if more than 6 profiles are selected
         if (user_profiles.Count > 6){
             left.gameObject.SetActive(true);
             right.gameObject.SetActive(true);
@@ -34,9 +37,12 @@ public class ContainerScript : MonoBehaviour
             right.gameObject.SetActive(false);      
         }
 
+        // disable left button of first page and right button on last page
         left.interactable = page>0;
         right.interactable = page<=user_profiles.Count/6;
 
+        // Iterate through all the profiles, enable the ones on the page and disable the other
+        // Calculate the x position for each profile display
         for (int i = 0; i < user_profiles.Count; i++){
             if (i >= 6*page && i < 6*page+profiles_in_this_page){
                 user_profiles[i].SetActive(true);
@@ -51,6 +57,7 @@ public class ContainerScript : MonoBehaviour
         }
     }
 
+    // This function adds a profile to the container
     public void AddProfile(NetworkScript profile)
     {
         if (!network.Contains(profile)){
@@ -62,6 +69,7 @@ public class ContainerScript : MonoBehaviour
         }
     }
     
+    // This function removes a profile from the container
     public void RemoveProfile(NetworkScript profile)
     {
         network.Remove(profile);
@@ -74,10 +82,12 @@ public class ContainerScript : MonoBehaviour
         }
     }
 
+    // Turn the page left
     public void Left(){
         page -= 1;
     }
 
+    // Turn the page right
     public void Right(){
         page += 1;
     }
